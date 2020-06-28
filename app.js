@@ -3,20 +3,18 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var Sequelize = require('sequelize');
+const {db} = require('./db/models');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
-const db = new Sequelize('socialapp', 'postgres', '10p17ew0142', {
-  host: 'localhost',
-  dialect: 'postgres'
-});
 
-db.authenticate()
-.then(() => console.log('Connected to server'))
+
+db.sync({force: true})
+.then(() => console.log('Connected to Postgres server'))
 .catch(err => console.log('ERROR :' + err));
 
 
